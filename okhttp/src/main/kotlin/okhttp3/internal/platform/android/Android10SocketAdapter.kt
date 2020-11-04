@@ -39,11 +39,11 @@ class Android10SocketAdapter : SocketAdapter {
   override fun isSupported(): Boolean = Companion.isSupported()
 
   @SuppressLint("NewApi")
-  override fun getSelectedProtocol(sslSocket: SSLSocket): String? =
-      when (val protocol = sslSocket.applicationProtocol) {
-        null, "" -> null
-        else -> protocol
-      }
+  override fun getSelectedProtocol(sslSocket: SSLSocket): String? = null
+//      when (val protocol = sslSocket.applicationProtocol) {
+//        null, "" -> null
+//        else -> protocol
+//      }
 
   @SuppressLint("NewApi")
   override fun configureTlsExtensions(
@@ -57,7 +57,7 @@ class Android10SocketAdapter : SocketAdapter {
       val sslParameters = sslSocket.sslParameters
 
       // Enable ALPN.
-      sslParameters.applicationProtocols = Platform.alpnProtocolNames(protocols).toTypedArray()
+//      sslParameters.applicationProtocols = Platform.alpnProtocolNames(protocols).toTypedArray()
 
       sslSocket.sslParameters = sslParameters
     } catch (iae: IllegalArgumentException) {

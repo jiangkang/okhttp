@@ -33,24 +33,25 @@ open class Jdk9Platform : Platform() {
 
     val names = alpnProtocolNames(protocols)
 
-    sslParameters.applicationProtocols = names.toTypedArray()
+//    sslParameters.applicationProtocols = names.toTypedArray()
 
     sslSocket.sslParameters = sslParameters
   }
 
   @SuppressSignatureCheck
   override fun getSelectedProtocol(sslSocket: SSLSocket): String? {
-    try {
-      // SSLSocket.getApplicationProtocol returns "" if application protocols values will not
-      // be used. Observed if you didn't specify SSLParameters.setApplicationProtocols
-      return when (val protocol = sslSocket.applicationProtocol) {
-        null, "" -> null
-        else -> protocol
-      }
-    } catch (e: UnsupportedOperationException) {
-      // https://docs.oracle.com/javase/9/docs/api/javax/net/ssl/SSLSocket.html#getApplicationProtocol--
-      return null
-    }
+//    try {
+//      // SSLSocket.getApplicationProtocol returns "" if application protocols values will not
+//      // be used. Observed if you didn't specify SSLParameters.setApplicationProtocols
+//      return when (val protocol = sslSocket.applicationProtocol) {
+//        null, "" -> null
+//        else -> protocol
+//      }
+//    } catch (e: UnsupportedOperationException) {
+//      // https://docs.oracle.com/javase/9/docs/api/javax/net/ssl/SSLSocket.html#getApplicationProtocol--
+//      return null
+//    }
+    return null
   }
 
   override fun trustManager(sslSocketFactory: SSLSocketFactory): X509TrustManager? {

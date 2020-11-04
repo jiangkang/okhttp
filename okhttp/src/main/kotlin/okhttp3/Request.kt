@@ -204,7 +204,7 @@ class Request internal constructor(
      * headers like "Cookie".
      *
      * Note that for some headers including `Content-Length` and `Content-Encoding`,
-     * OkHttp may replace [value] with a header derived from the request body.
+     * OkHttp may replace [value] with a header derived from the reqCuest body.
      */
     open fun addHeader(name: String, value: String) = apply {
       headers.add(name, value)

@@ -81,7 +81,7 @@ class WireSharkListenerFactory(
         if (tlsVersions.contains(TLS_1_3)) {
           println("TLSv1.3 requires an external command run before first traffic is sent")
           println("Follow instructions at https://github.com/neykov/extract-tls-secrets for TLSv1.3")
-          println("Pid: ${ProcessHandle.current().pid()}")
+//          println("Pid: ${ProcessHandle.current().pid()}")
 
           Thread.sleep(10000)
         }

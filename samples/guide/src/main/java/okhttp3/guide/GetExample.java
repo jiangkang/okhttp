@@ -5,6 +5,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * Get获取方式
+ */
 public class GetExample {
   OkHttpClient client = new OkHttpClient();
 

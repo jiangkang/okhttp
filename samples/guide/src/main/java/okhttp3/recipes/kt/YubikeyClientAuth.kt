@@ -56,8 +56,8 @@ class YubikeyClientAuth() {
 
     // May fail with ProviderException with root cause like
     // sun.security.pkcs11.wrapper.PKCS11Exception: CKR_SLOT_ID_INVALID
-    val pkcs11 = Security.getProvider("SunPKCS11").configure(config)
-    Security.addProvider(pkcs11)
+//    val pkcs11 = Security.getProvider("SunPKCS11").configure(config)
+//    Security.addProvider(pkcs11)
 
     val callbackHandler = ConsoleCallbackHandler
 
