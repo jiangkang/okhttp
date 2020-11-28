@@ -473,6 +473,9 @@ class RealCall(
     @Volatile var callsPerHost = AtomicInteger(0)
       private set
 
+    /**
+     * 自增计数
+     */
     fun reuseCallsPerHostFrom(other: AsyncCall) {
       this.callsPerHost = other.callsPerHost
     }

@@ -42,6 +42,7 @@ class Dispatcher constructor() {
    *
    * If more than [maxRequests] requests are in flight when this is invoked, those requests will
    * remain in flight.
+   * 并发执行的最大request数量，超过这个数量，请求队列中内存中，等待正在运行的call完成
    */
   @get:Synchronized var maxRequests = 64
     set(maxRequests) {
@@ -61,6 +62,7 @@ class Dispatcher constructor() {
    * will remain in flight.
    *
    * WebSocket connections to hosts **do not** count against this limit.
+   * 每个host并发执行的最大request数
    */
   @get:Synchronized var maxRequestsPerHost = 5
     set(maxRequestsPerHost) {
@@ -118,6 +120,7 @@ class Dispatcher constructor() {
       // Mutate the AsyncCall so that it shares the AtomicInteger of an existing running call to
       // the same host.
       if (!call.call.forWebSocket) {
+        // 在ready和running队列中查找是否有相同host的Call存在，存在则将对应call的CallsPerHost赋值到当前Call
         val existingCall = findExistingCallWithHost(call.host)
         if (existingCall != null) call.reuseCallsPerHostFrom(existingCall)
       }
@@ -172,8 +175,12 @@ class Dispatcher constructor() {
         if (asyncCall.callsPerHost.get() >= this.maxRequestsPerHost) continue // Host max capacity.
 
         i.remove()
+        // 增加计数
         asyncCall.callsPerHost.incrementAndGet()
+
         executableCalls.add(asyncCall)
+
+        // 添加到runningAsyncCall中
         runningAsyncCalls.add(asyncCall)
       }
       isRunning = runningCallsCount() > 0
@@ -181,6 +188,8 @@ class Dispatcher constructor() {
 
     for (i in 0 until executableCalls.size) {
       val asyncCall = executableCalls[i]
+
+      // 交给线程池去调度执行
       asyncCall.executeOn(executorService)
     }
 

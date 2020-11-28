@@ -30,9 +30,11 @@ class AccessHeaders {
         .addHeader("Accept", "application/vnd.github.v3+json")
         .build()
 
+
     client.newCall(request).execute().use { response ->
       if (!response.isSuccessful) throw IOException("Unexpected code $response")
 
+      println("Request Headers : ${response.request.headers.joinToString()}")
       println("Server: ${response.header("Server")}")
       println("Date: ${response.header("Date")}")
       println("Vary: ${response.headers("Vary")}")

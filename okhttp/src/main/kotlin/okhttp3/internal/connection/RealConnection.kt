@@ -81,6 +81,10 @@ import okio.source
  *
  *  2. Once connected, a connection is shared to a connection pool. In this phase accesses to the
  *     connection's state must be guarded by holding a lock on the connection.
+ *
+ * 一个Connection的生命周期有两个阶段：
+ *  1. 当它正在连接时，单个线程单个call拥有connection，在这个阶段connection不共享，不加锁
+ *  2. 一旦建立了连接，connection被共享到了 ConnectionPool 中，这个阶段，必须持有Connection中的lock才可以访问这个connection的状态
  */
 class RealConnection(
   val connectionPool: RealConnectionPool,
